@@ -32,9 +32,9 @@ func Test_deleteApp(t *testing.T) {
 	// Add test accounts to keybase.
 	kb, err := keys.NewKeyBaseFromDir(opts.Home)
 	assert.NoError(t, err)
-	_, err = kb.CreateAccount(fakeKeyName1, testMnemonic, "", "", 0, 0)
+	_, err = kb.CreateAccount(fakeKeyName1, testMnemonic, "", "", "ed25519", 0, 0)
 	assert.NoError(t, err)
-	_, err = kb.CreateAccount(fakeKeyName2, testMnemonic, "", "", 0, 1)
+	_, err = kb.CreateAccount(fakeKeyName2, testMnemonic, "", "", "ed25519", 0, 1)
 	assert.NoError(t, err)
 
 	// test: Key not found

@@ -24,10 +24,10 @@ type Keybase interface {
 	// CreateAccount creates an account based using the BIP44 path (44'/118'/{account}'/0/{index}
 	// Encrypt the key to disk using encryptPasswd.
 	// See https://github.com/tendermint/classic/sdk/issues/2095
-	CreateAccount(name, mnemonic, bip39Passwd, encryptPasswd string, account uint32, index uint32) (Info, error)
+	CreateAccount(name, mnemonic, bip39Passwd, encryptPasswd, keyType string, account uint32, index uint32) (Info, error)
 
 	// Like CreateAccount but from general bip44 params.
-	CreateAccountBip44(name, mnemonic, bip39Passwd, encryptPasswd string, params hd.BIP44Params) (Info, error)
+	CreateAccountBip44(name, mnemonic, bip39Passwd, encryptPasswd, keyType string, params hd.BIP44Params) (Info, error)
 
 	// CreateLedger creates, stores, and returns a new Ledger key reference
 	CreateLedger(name string, algo SigningAlgo, hrp string, account, index uint32) (info Info, err error)
