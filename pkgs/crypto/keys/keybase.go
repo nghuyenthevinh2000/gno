@@ -7,6 +7,7 @@ import (
 
 	"github.com/gnolang/gno/pkgs/crypto"
 	"github.com/gnolang/gno/pkgs/crypto/bip39"
+	"github.com/gnolang/gno/pkgs/crypto/ed25519"
 	"github.com/gnolang/gno/pkgs/crypto/hd"
 	"github.com/gnolang/gno/pkgs/crypto/keys/armor"
 	"github.com/gnolang/gno/pkgs/crypto/keys/keyerror"
@@ -83,23 +84,23 @@ func NewInMemory() Keybase { return dbKeybase{dbm.NewMemDB()} }
 
 // CreateAccount converts a mnemonic to a private key and persists it, encrypted with the given password.
 // XXX Info could include the separately derived ed25519 key,
-// XXX and a signature from the sec2561key as certificate.
+// XXX and a signature from the sec2561key or ed25519 as certificate.
 // XXX NOTE: we are not saving the derivation path.
 // XXX but this doesn't help encrypted commnuication.
 // XXX also there is no document structure.
-func (kb dbKeybase) CreateAccount(name, mnemonic, bip39Passwd, encryptPasswd string, account uint32, index uint32) (Info, error) {
+func (kb dbKeybase) CreateAccount(name, mnemonic, bip39Passwd, encryptPasswd, keyType string, account uint32, index uint32) (Info, error) {
 	coinType := crypto.CoinType
 	hdPath := hd.NewFundraiserParams(account, coinType, index)
-	return kb.CreateAccountBip44(name, mnemonic, bip39Passwd, encryptPasswd, *hdPath)
+	return kb.CreateAccountBip44(name, mnemonic, bip39Passwd, encryptPasswd, keyType, *hdPath)
 }
 
-func (kb dbKeybase) CreateAccountBip44(name, mnemonic, bip39Passphrase, encryptPasswd string, params hd.BIP44Params) (info Info, err error) {
+func (kb dbKeybase) CreateAccountBip44(name, mnemonic, bip39Passphrase, encryptPasswd, keyType string, params hd.BIP44Params) (info Info, err error) {
 	seed, err := bip39.NewSeedWithErrorChecking(mnemonic, bip39Passphrase)
 	if err != nil {
-		return
+		return nil, err
 	}
 
-	info, err = kb.persistDerivedKey(seed, encryptPasswd, name, params.String())
+	info, err = kb.persistDerivedKey(seed, encryptPasswd, name, params.String(), keyType)
 	return
 }
 
@@ -134,17 +135,23 @@ func (kb dbKeybase) CreateMulti(name string, pub crypto.PubKey) (Info, error) {
 	return kb.writeMultisigKey(name, pub), nil
 }
 
-func (kb *dbKeybase) persistDerivedKey(seed []byte, passwd, name, fullHdPath string) (info Info, err error) {
-	// create master key and derive first key:
-	masterPriv, ch := hd.ComputeMastersFromSeed(seed)
-	derivedPriv, err := hd.DerivePrivateKeyForPath(masterPriv, ch, fullHdPath)
-	if err != nil {
-		return
-	}
-
+func (kb *dbKeybase) persistDerivedKey(seed []byte, passwd, name, fullHdPath, keyType string) (info Info, err error) {
 	// use possibly blank password to encrypt the private
 	// key and store it. User must enforce good passwords.
-	info = kb.writeLocalKey(name, secp256k1.PrivKeySecp256k1(derivedPriv), passwd)
+	if keyType == "secp256k1" {
+		// create master key and derive first key:
+		masterPriv, ch := hd.ComputeMastersFromSeed(seed)
+		derivedPriv, err := hd.DerivePrivateKeyForPath(masterPriv, ch, fullHdPath)
+		if err != nil {
+			return nil, err
+		}
+
+		info = kb.writeLocalKey(name, secp256k1.PrivKeySecp256k1(derivedPriv), passwd)
+	}
+	if keyType == "ed25519" {
+		info = kb.writeLocalKey(name, ed25519.GenPrivKeyFromSecret(seed), passwd)
+	}
+
 	return
 }
 
