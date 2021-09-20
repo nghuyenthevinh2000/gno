@@ -212,3 +212,63 @@
 00:22:10.105776 db@open done T·144.720772ms
 00:22:10.516670 db@close closing
 00:22:10.516941 db@close done T·258.691µs
+=============== Sep 20, 2021 (+07) ===============
+09:37:06.576007 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:37:06.641631 version@stat F·[3 1] S·2KiB[1KiB 1KiB] Sc·[0.75 0.00]
+09:37:06.641718 db@open opening
+09:37:06.641961 journal@recovery F·1
+09:37:06.643679 journal@recovery recovering @42
+09:37:06.716987 memdb@flush created L0@44 N·2 S·523B "g17..ess,v23":"vin..nfo,v22"
+09:37:06.717633 version@stat F·[4 1] S·3KiB[2KiB 1KiB] Sc·[1.00 0.00]
+09:37:06.829787 db@janitor F·7 G·0
+09:37:06.829951 db@open done T·188.166056ms
+09:37:06.830012 db@close closing
+09:37:06.830127 table@compaction L0·4 -> L1·1 S·3KiB Q·24
+09:37:06.830230 table@build exiting
+09:37:06.830370 db@close done T·351.382µs
+=============== Sep 20, 2021 (+07) ===============
+09:39:10.711687 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:39:10.711973 version@stat F·[4 1] S·3KiB[2KiB 1KiB] Sc·[1.00 0.00]
+09:39:10.711984 db@open opening
+09:39:10.712054 journal@recovery F·1
+09:39:10.712515 journal@recovery recovering @45
+09:39:10.713017 version@stat F·[4 1] S·3KiB[2KiB 1KiB] Sc·[1.00 0.00]
+09:39:10.837823 db@janitor F·7 G·0
+09:39:10.837949 db@open done T·125.914844ms
+09:39:10.837998 db@close closing
+09:39:10.838190 table@compaction L0·4 -> L1·1 S·3KiB Q·24
+09:39:10.838248 table@build exiting
+09:39:10.838366 db@close done T·362.283µs
+=============== Sep 20, 2021 (+07) ===============
+09:41:22.480357 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:41:22.480617 version@stat F·[4 1] S·3KiB[2KiB 1KiB] Sc·[1.00 0.00]
+09:41:22.480630 db@open opening
+09:41:22.480698 journal@recovery F·1
+09:41:22.481175 journal@recovery recovering @47
+09:41:22.481604 version@stat F·[4 1] S·3KiB[2KiB 1KiB] Sc·[1.00 0.00]
+09:41:22.623869 db@janitor F·7 G·0
+09:41:22.623993 db@open done T·143.335277ms
+09:41:22.624065 db@close closing
+09:41:22.624321 table@compaction L0·4 -> L1·1 S·3KiB Q·24
+09:41:22.624407 table@build exiting
+09:41:22.624520 db@close done T·450.067µs
+=============== Sep 20, 2021 (+07) ===============
+09:41:25.869758 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:41:25.870522 version@stat F·[4 1] S·3KiB[2KiB 1KiB] Sc·[1.00 0.00]
+09:41:25.870589 db@open opening
+09:41:25.870839 journal@recovery F·1
+09:41:25.872042 journal@recovery recovering @49
+09:41:25.874575 version@stat F·[4 1] S·3KiB[2KiB 1KiB] Sc·[1.00 0.00]
+09:41:26.016564 db@janitor F·7 G·0
+09:41:26.016649 db@open done T·146.027051ms
+09:41:26.016981 table@compaction L0·4 -> L1·1 S·3KiB Q·24
+09:41:26.082925 table@build created L1@53 N·10 S·1KiB "g14..ess,v8":"vin..nfo,v4"
+09:41:26.082993 version@stat F·[0 1] S·1KiB[0B 1KiB] Sc·[0.00 0.00]
+09:41:26.149940 table@compaction committed F-4 S-2KiB Ke·0 D·4 T·132.852751ms
+09:41:26.150038 table@remove removed @44
+09:41:26.150071 table@remove removed @39
+09:41:26.150099 table@remove removed @30
+09:41:26.150125 table@remove removed @25
+09:41:26.150152 table@remove removed @24
+09:41:26.406255 db@close closing
+09:41:26.406481 db@close done T·218.384µs
