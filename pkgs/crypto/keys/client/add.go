@@ -28,13 +28,14 @@ type AddOptions struct {
 	NoBackup          bool     `flag:"nobackup" help:"Don't print out seed phrase (if others are watching the terminal)"`
 	DryRun            bool     `flag:"dryrun" help:"Perform action, but don't add key to local keystore"`
 	Account           uint32   `flag:"account" help:"Account number for HD derivation"`
-	Index             uint32   `flag:"index" description:"Address index number for HD derivation"`
-	KeyType           string   `flag:"type" description:"Type of keys (ed25519|secp256k1)"`
-	Entropy           bool     `flag:"entropy" description:"Gen nmenomic from custom 256-bit entropy"`
+	Index             uint32   `flag:"index" help:"Address index number for HD derivation"`
+	KeyType           string   `flag:"type" help:"Type of keys (ed25519|secp256k1). Default to sepc256k1"`
+	Entropy           bool     `flag:"entropy" help:"Gen nmenomic from custom 256-bit entropy"`
 }
 
 var DefaultAddOptions = AddOptions{
 	MultisigThreshold: 1,
+	KeyType:           "secp256k1",
 }
 
 // DryRunKeyPass contains the default key password for genesis transactions
@@ -195,7 +196,7 @@ func addApp(cmd *command.Command, args []string, iopts interface{}) error {
 			return nil
 		}
 
-		// hash input entropy to get entropy seed to get mnemonic
+		// hash input entropy to get entropy seed
 		hashedEntropy := sha256.Sum256([]byte(inputEntropy))
 		entropySeed := hashedEntropy[:]
 		mnemonic, err = bip39.NewMnemonic(entropySeed[:])
